@@ -1,0 +1,5 @@
+<ul *ngIf="suggestedAmountsList" class="amounts">
+    <li *ngFor="let amount of suggestedAmountsList" (click)="onSelectAmount(amount)">
+        {{amount}} Euro
+    </li>
+</ul>

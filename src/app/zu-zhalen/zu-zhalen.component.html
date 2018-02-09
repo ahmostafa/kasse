@@ -1,0 +1,17 @@
+<div *ngIf="amount">
+    <div><span>Zu zahlen</span></div>
+    <h1>{{ amount}} Euro</h1>
+</div>
+
+<div *ngIf="givenAmount">
+    <div><span>Gegeben</span></div>
+    <h1>{{ givenAmount}} Euro</h1>
+</div>
+
+<div>
+    <label>Scaned Amount:
+    <input [(ngModel)]="amount" placeholder="scanedAmount">
+  </label>
+
+    <button ng-click="amountScaned()">OK!</button>
+</div>

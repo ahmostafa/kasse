@@ -31,10 +31,15 @@ export class SuggestedAmountComponent implements OnInit {
     result [i] = amount;
     if (this.isDecimalNumber(amount) ) {
       i++;
-      result[i] = (Math.round(amount * 10 ) / 10);
+      // result[i] = (Math.round(amount * 10 ) / 10); // this has some error
+      // to check if this rounded lower than current amount increase only one else so the rounded number is higher
+      result[i] = (Math.round(amount)) > amount ? Math.round(amount) : (Math.round(amount) + 1);
+      console.log('second number is = ' + result[i]);
     }
     i++;
-    result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);
+    // result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);// wrong number is the current number it self dvidable five
+    // to check if the current number not five divdable get the neares greatest number eles add five to the current number
+    result[i] = (result[i - 1] % 5 ) !== 0 ? this.nearestGreaterNumberDividFive(result[i - 1]) : (result[i - 1] + 5);
 
     i++;
     result [i] = result[i - 1] + 5;

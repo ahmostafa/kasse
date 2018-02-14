@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ZuZhalenComponent } from './zu-zhalen/zu-zhalen.component';
 import { SuggestedAmountComponent } from './suggested-amount/suggested-amount.component';
+import { BezhalungService } from './services/bezhalung.service';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { SuggestedAmountComponent } from './suggested-amount/suggested-amount.co
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [BezhalungService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

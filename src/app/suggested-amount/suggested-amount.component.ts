@@ -36,81 +36,98 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
    */
 
   suggestedAmount(amount: number): number[] {
-
     const result: number[] = [];
     let i = 0; // indicate the suggestion and get last suggestion
     result [i] = amount; // FIRST
-    if (this.isDecimalNumber(amount) ) {
-      i++; // SECOND
-      // result[i] = (Math.round(amount * 10 ) / 10); // this has some error
-      // to check if this rounded lower than current amount increase only one else so the rounded number is higher
-      result[i] = (Math.round(amount)) > amount ? Math.round(amount) : (Math.round(amount) + 1);
-      console.log('second number is = ' + result[i]);
-    }
-    i++; // THird
-    // result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);// wrong number is the current number it self dvidable five
-    // to check if the current number not five divdable get the neares greatest number eles add five to the current number
-    // tslint:disable-next-line:max-line-length
-    // result[i] = (result[i - 1] % 5 ) !== 0 ? this.nearestGreaterNumberDividFive(result[i - 1]) : ( result[i - 1].valueOf() + 5); // this is has issues
-    if ( (result[i - 1] % 5 ) !== 0 ) {// the number is not dividable on five
-      result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);
-    }else if (( result[i - 1] % 10 === 5)) {// start with five
-      result [i] = result[i - 1] + 5 ;
-    }else if (this.isBankNote(result[i - 1])) {
-      result [i] = this.getNextBankNote(result[i - 1]);
-    }else {
-      result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
-    }
+    if (( (result[i] % 500) !== 0)) {
+      console.log('First ' + result[i]);
+        if (this.isDecimalNumber(amount) ) {
+          i++; // SECOND
+          // result[i] = (Math.round(amount * 10 ) / 10); // this has some error
+          // to check if this rounded lower than current amount increase only one else so the rounded number is higher
+          result[i] = (Math.round(amount)) > amount ? Math.round(amount) : (Math.round(amount) + 1);
+          console.log('second number is = ' + result[i]);
+        }
+        i++; // THird
+        // result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);// wrong number is the current number it self dvidable five
+        // to check if the current number not five divdable get the neares greatest number eles add five to the current number
+        // tslint:disable-next-line:max-line-length
+        // result[i] = (result[i - 1] % 5 ) !== 0 ? this.nearestGreaterNumberDividFive(result[i - 1]) : ( result[i - 1].valueOf() + 5); // this is has issues
+        if ( (result[i - 1] % 5 ) !== 0 ) {// the number is not dividable on five
+          result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);
+        }else if (( result[i - 1] % 10 === 5)) {// start with five
+          result [i] = result[i - 1] + 5 ;
+        }else if (this.isBankNote(result[i - 1])) {
+          result [i] = this.getNextBankNote(result[i - 1]);
+        }else {
+          result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
+        }
+        console.log('Third ' + result[i]);
 
-    i++;
-    //FOURTH
-     // result [i] = ( result[i - 1] % 10 === 5) ? result[i - 1] + 5 : this.getNextNumberForNumbersStartWithZeor(result[i - 1])  ;// updated
-    if (( result[i - 1] % 10 === 5)) {// start with five
-      result [i] = result[i - 1] + 5 ;
-    }else if (this.isBankNote(result[i - 1])) {
-      result [i] = this.getNextBankNote(result[i - 1]);
-    }else {
-      result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
-    }
-     console.log('fourth = ' + result[i]);
-    // if ( result[i - 1] % 10 === 5) {
-    //   console.log('true');
-    //   console.log(result[i - 1] % 10);
-    //   console.log(result [i - 1]);
-    //     result[i] = result[i - 1] + 5;
-    // }else {
-    //   result[i] = result[i - 1] + 10;
-    // }
-    // console.log(result [i]);
-    // this to check th bank note
-    // FIFTH
-    if ( result[i] < 500) {
-      if ( result[i] <  5) {
+        // FOURTH
+        // tslint:disable-next-line:max-line-length
+        // result [i] = ( result[i - 1] % 10 === 5) ? result[i - 1] + 5 : this.getNextNumberForNumbersStartWithZeor(result[i - 1])  ;// updated
+        if ( (result[i] % 500) !== 0) {
+            i++;
+            if (( result[i - 1] % 10 === 5)) {// start with five
+              result [i] = result[i - 1] + 5 ;
+            }else if (this.isBankNote(result[i - 1])) {
+              result [i] = this.getNextBankNote(result[i - 1]);
+            }else {
+              result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
+            }
+            console.log('fourth = ' + result[i]);
+        }
+        // if ( result[i - 1] % 10 === 5) {
+        //   console.log('true');
+        //   console.log(result[i - 1] % 10);
+        //   console.log(result [i - 1]);
+        //     result[i] = result[i - 1] + 5;
+        // }else {
+        //   result[i] = result[i - 1] + 10;
+        // }
+        // console.log(result [i]);
+        // this to check th bank note
+        // FIFTH
 
-        i++;
-        result[i] = 5;
-      }else if (result[i] <  10) {
-        i++;
-        result[i] = 10;
-      }else if (result[i] <  20) {
-        i++;
-        result[i] = 20;
-      }else if (result[i] <  50) {
-        i++;
-        result[i] = 50;
-      }else if (result[i] <  100) {
-        i++;
-        result[i] = 100;
-      }else if (result[i] <  200) {
-        i++;
-        result[i] = 200;
-      }else {
-        i++;
-        result[i] = 500;
+        if ( (result[i] % 500) !== 0) {
+          i++;
+          if (( result[i - 1] % 10 === 5)) {// start with five
+            result [i] = result[i - 1] + 5 ;
+          }else if (this.isBankNote(result[i - 1])) {
+            result [i] = this.getNextBankNote(result[i - 1]);
+          }else {
+            result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
+          }
+          console.log('FIFTH = ' + result[i]);
       }
-      console.log('Fifth = ' + result[i]);
+        /*if ( result[i] < 500) {
+          if ( result[i] <  5) {
 
-    }
+            i++;
+            result[i] = 5;
+          }else if (result[i] <  10) {
+            i++;
+            result[i] = 10;
+          }else if (result[i] <  20) {
+            i++;
+            result[i] = 20;
+          }else if (result[i] <  50) {
+            i++;
+            result[i] = 50;
+          }else if (result[i] <  100) {
+            i++;
+            result[i] = 100;
+          }else if (result[i] <  200) {
+            i++;
+            result[i] = 200;
+          }else if (result[i] < 500) {
+            i++;
+            result[i] = 500;
+          }
+          console.log('Fifth = ' + result[i]);
+
+        }*/}
 
     return result.reverse();
   }
@@ -172,7 +189,9 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
           }
       }else if (200 < amount && amount < 500) {
           const temp = amount - 200;
-          if (this.isBankNote(temp)) {
+          if (temp / 2 === 100) {
+              result = this.getNextBankNote(temp);
+          }else if (this.isBankNote(temp)) {
               result = 200 + this.getNextBankNote(temp);
           }else if (temp / 2 === 20) {
               result = 200 + this.getNextBankNote(20);

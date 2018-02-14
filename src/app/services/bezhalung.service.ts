@@ -15,14 +15,14 @@ export class BezhalungService {
     return this.subject.asObservable();
   }
 
-  setPaidAmount(amount): void {
-    console.log('Paid amount in service = ' + amount);
-    this.subject.next({paidAmount: amount});
-  }
+  // setPaidAmount(amount): void {
+  //   console.log('Paid amount in service = ' + amount);
+  //   this.subject.next({paidAmount: amount});
+  // }
 
-  getPaidAmount(): Observable<any> {
-    return this.subject.asObservable();
-  }
+  // getPaidAmount(): Observable<any> {
+  //   return this.subject.asObservable();
+  // }
 
   clearAllAmounts() {
     this.subject.next();

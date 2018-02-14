@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core/src/metadata/directives';
 import { SuggestedAmountComponent } from '../suggested-amount/suggested-amount.component';
 import { BezhalungService } from '../services/bezhalung.service';
+import { GegebenService } from '../services/gegeben.service';
 import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-zu-zhalen',
@@ -14,8 +15,8 @@ export class ZuZhalenComponent implements OnInit {
   subScription: Subscription;
    amount = 0;
    givenAmount = 0;
-  constructor(private bezahlungService: BezhalungService) {
-    this.subScription = this.bezahlungService.getPaidAmount().subscribe(
+  constructor(private bezahlungService: BezhalungService, private gegebenService: GegebenService) {
+    this.subScription = this.gegebenService.getPaidAmount().subscribe(
       paidAmount => {this.givenAmount = paidAmount.paidAmount; } );
   }
 

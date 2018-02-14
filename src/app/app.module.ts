@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ZuZhalenComponent } from './zu-zhalen/zu-zhalen.component';
 import { SuggestedAmountComponent } from './suggested-amount/suggested-amount.component';
 import { BezhalungService } from './services/bezhalung.service';
+import { GegebenService } from './services/gegeben.service';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { BezhalungService } from './services/bezhalung.service';
     BrowserModule,
     FormsModule
   ],
-  providers: [BezhalungService],
+  providers: [BezhalungService, GegebenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

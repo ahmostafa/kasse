@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BezhalungService } from '../services/bezhalung.service';
+import { GegebenService } from '../services/gegeben.service';
 import { Subscription } from 'rxjs/Subscription';
 enum BankNote { TEN = 10,  TWENTY= 20, FIFTY = 50, HUNDRED = 100, TWOHUNDRED = 200, FIFEHUNDRED = 500 }
 @Component({
@@ -11,7 +12,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
    suggestedAmountsList: number[]= [];
    subScription: Subscription;
-  constructor(private bezahlungService: BezhalungService) {
+  constructor(private bezahlungService: BezhalungService, private gegebenService: GegebenService) {
     this.subScription = this.bezahlungService.getAmountOfAllItems().subscribe(
       totalAmount => {this.suggestedAmountsList = this.suggestedAmount(totalAmount.amountOfAllItems); });
   }
@@ -27,7 +28,8 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
   onSelectAmount(amount: number): void {
     console.log( 'Selected amount= ' + amount);
-    this.bezahlungService.setPaidAmount(amount);
+    // this.bezahlungService.setPaidAmount(amount);
+    this.gegebenService.setPaidAmount(amount);
     // pass the value to gegeben lable on the other component
   }
   /**

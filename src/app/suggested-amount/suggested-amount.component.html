@@ -1,5 +1,7 @@
-<ul *ngIf="suggestedAmountsList" class="amounts">
-    <li *ngFor="let amount of suggestedAmountsList" (click)="onSelectAmount(amount)">
-        {{amount|currency:'€'}}
-    </li>
-</ul>
+<div class="row row-content align-items-center ">
+    <ul *ngIf="suggestedAmountsList" class="amounts">
+        <li *ngFor="let amount of suggestedAmountsList" [class.selected]="amount===selectedAmount" (click)="onSelectAmount(amount)">
+            {{amount|currency:'€'}}
+        </li>
+    </ul>
+</div>

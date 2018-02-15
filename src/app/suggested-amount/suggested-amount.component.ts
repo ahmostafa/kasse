@@ -12,6 +12,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
    suggestedAmountsList: number[]= [];
    subScription: Subscription;
+    selectedAmount= 0;
   constructor(private bezahlungService: BezhalungService, private gegebenService: GegebenService) {
     this.subScription = this.bezahlungService.getAmountOfAllItems().subscribe(
       totalAmount => {this.suggestedAmountsList = this.suggestedAmount(totalAmount.amountOfAllItems); });
@@ -29,6 +30,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
   onSelectAmount(amount: number): void {
     console.log( 'Selected amount= ' + amount);
     // this.bezahlungService.setPaidAmount(amount);
+    this.selectedAmount = amount;
     this.gegebenService.setPaidAmount(amount);
     // pass the value to gegeben lable on the other component
   }
@@ -38,6 +40,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
    */
 
   suggestedAmount(amount: number): number[] {
+    this.selectedAmount =  0;
     const result: number[] = [];
     let i = 0; // indicate the suggestion and get last suggestion
     result [i] = amount; // FIRST

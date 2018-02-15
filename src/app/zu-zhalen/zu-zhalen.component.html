@@ -1,17 +1,21 @@
-<div *ngIf="amount">
-    <div><span>Zu zahlen</span></div>
-    <h1>{{ amount|currency:'€'}} </h1>
-</div>
+<div class="row row-content align-items-center ">
+    <div class="col">
+        <div *ngIf="amount">
+            <div><span>Zu zahlen</span></div>
+            <h1>{{ amount|currency:'€'}} </h1>
+        </div>
 
-<div *ngIf="givenAmount">
-    <div><span>Gegeben</span></div>
-    <h1>{{ givenAmount|currency:'€'}} </h1>
-</div>
+        <div *ngIf="givenAmount">
+            <div><span>Gegeben</span></div>
+            <h1>{{ givenAmount|currency:'€'}} </h1>
+        </div>
 
-<div>
-    <label>Scaned Amount:
+        <div>
+            <label>Scaned Amount:
     <input type="number" [(ngModel)]="amount" placeholder="scanedAmount" >
   </label>
 
-    <button (click)="amountScaned()">OK!</button>
+            <button (click)="amountScaned()">OK!</button>
+        </div>
+    </div>
 </div>

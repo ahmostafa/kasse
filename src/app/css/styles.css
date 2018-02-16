@@ -1,3 +1,19 @@
+.amount-card {
+    background-color: white;
+    height: 7em;
+    border-bottom: 1px;
+    border-bottom-color: #e2e2e2;
+    border-bottom-style: solid;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.underline-span {
+    border-bottom-color: #49bcef;
+    border-bottom-style: double;
+    border-bottom-width: 7px;
+}
+
 .row-header {
     margin: 0px auto;
     padding: 0px 0px;

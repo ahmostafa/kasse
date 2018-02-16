@@ -13,6 +13,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
    suggestedAmountsList: number[]= [];
    subScription: Subscription;
     selectedAmount= 0;
+    numPadNumberStr= '';
   constructor(private bezahlungService: BezhalungService, private gegebenService: GegebenService) {
     this.subScription = this.bezahlungService.getAmountOfAllItems().subscribe(
       totalAmount => {this.suggestedAmountsList = this.suggestedAmount(totalAmount.amountOfAllItems); });
@@ -25,6 +26,36 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
    this.subScription.unsubscribe();
+  }
+
+  onNumPadBtnClick(btnTxt: string): void {
+    if ( btnTxt === 'b' && this.numPadNumberStr.length > 0) {
+      this.numPadNumberStr = this.numPadNumberStr.slice(0, -1);
+      console.log('case 1');
+    }else if ( this.numPadNumberStr.indexOf('.') === -1 && btnTxt !== 'b' ) {
+      console.log('case 2');
+      this.numPadNumberStr += btnTxt;
+    }else if ((this.numPadNumberStr.length - this.numPadNumberStr.indexOf('.')) < 3 && (btnTxt !== '.' && btnTxt !== 'b')) {
+      console.log('case 3');
+      this.numPadNumberStr += btnTxt;
+    }
+
+    console.log(this.numPadNumberStr);
+  }
+
+  onZahlenBtnClick(): void {
+    const  padNumber = parseFloat(this.numPadNumberStr);
+    const rest =  padNumber - this.suggestedAmountsList[this.suggestedAmountsList.length - 1];
+    if ( rest < 0) {
+      alert('Error The entered number is = ' +  padNumber
+      + 'and this is lower than the total amount number = ' + this.suggestedAmountsList[0] );
+    }else if ( rest > 0 ) {
+      this.onSelectAmount( padNumber);
+      // alert('The rest is = ' + rest);
+    }else {
+      this.onSelectAmount( padNumber);
+      // alert('Thanks for shopping from our Market');
+    }
   }
 
   onSelectAmount(amount: number): void {
@@ -41,6 +72,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
   suggestedAmount(amount: number): number[] {
     this.selectedAmount =  0;
+    this.numPadNumberStr = '';
     const result: number[] = [];
     let i = 0; // indicate the suggestion and get last suggestion
     result [i] = amount; // FIRST

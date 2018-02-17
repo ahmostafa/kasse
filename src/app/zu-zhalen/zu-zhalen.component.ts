@@ -34,7 +34,7 @@ export class ZuZhalenComponent implements OnInit {
 
   ngOnInit() {
   }
-/** 
+/**
  * @description after the total amount enterd which should the customer pay
 */
  amountScaned(): void {

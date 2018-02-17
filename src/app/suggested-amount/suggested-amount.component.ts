@@ -55,8 +55,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * @description when the ok of number pad clicked to check is the entered amount equal the requested and to set the given amount 
-   * 
+   * @description when the ok of number pad clicked to check is the entered amount equal the requested and to set the given amount
    */
   onZahlenBtnClick(): void {
     const  padNumber = parseFloat(this.numPadNumberStr);
@@ -242,7 +241,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
  }
 /**
  * @description this to get next banknote based of enum which start from 10
- * @param amount 
+ * @param amount
  */
  getNextBankNote(amount: number): number {
   let result = 0;

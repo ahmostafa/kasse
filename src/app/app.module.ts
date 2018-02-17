@@ -2,6 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+// import { registerLocaleData } from '@angular/common';
+// import localeDE from '@angular/common/locales/de';
+// registerLocaleData(localeDE, 'de');
+
 import { AppComponent } from './app.component';
 import { ZuZhalenComponent } from './zu-zhalen/zu-zhalen.component';
 import { SuggestedAmountComponent } from './suggested-amount/suggested-amount.component';
@@ -21,7 +27,7 @@ import { BezahlungTabComponent } from './bezahlung-tab/bezahlung-tab.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [BezhalungService, GegebenService],
+  providers: [BezhalungService, GegebenService, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

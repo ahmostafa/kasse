@@ -34,12 +34,22 @@ export class ZuZhalenComponent implements OnInit {
 
   ngOnInit() {
   }
-
+/** 
+ * @description after the total amount enterd which should the customer pay
+*/
  amountScaned(): void {
    console.log('amountScaned called');
    this.bezahlungService.sendAmountOfAllItems(this.amount);
   //  this.suggestedComp.suggestedAmount(this.amount);
 /// here amount should be sent to show suggested list
+  }
+/**
+ * @description to clear all data to prepare for taken next customer
+ */
+  nextCustomer(): void {
+    this.givenAmount = 0;
+    this.amount = 0;
+    this.bezahlungService.sendAmountOfAllItems(this.amount);
   }
 
 }

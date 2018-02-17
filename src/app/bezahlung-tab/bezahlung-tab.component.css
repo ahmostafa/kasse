@@ -1,0 +1,25 @@
+.tab-content {
+    background-color: #5d7079;
+}
+
+
+/* .nav-tabs>li {
+    float: none;
+    display: inline-block;
+    zoom: 1;
+}
+
+.nav-tabs {
+    text-align: center;
+} */
+
+.nav-tabs {
+    margin-bottom: -3px;
+}
+
+.nav-tabs .nav-link.active {
+    color: white;
+    background-color: #5d7079;
+    border-radius: 0px;
+    border: 0px;
+}

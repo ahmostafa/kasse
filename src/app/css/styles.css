@@ -1,3 +1,18 @@
+.username-tab {
+    padding-right: 1.5rem;
+    background-color: #e2e2e2;
+}
+
+.username-img {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.username {
+    margin-right: 1.9rem;
+    float: right;
+}
+
 .amount-card {
     background-color: white;
     height: 7em;

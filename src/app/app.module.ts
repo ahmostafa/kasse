@@ -7,13 +7,15 @@ import { ZuZhalenComponent } from './zu-zhalen/zu-zhalen.component';
 import { SuggestedAmountComponent } from './suggested-amount/suggested-amount.component';
 import { BezhalungService } from './services/bezhalung.service';
 import { GegebenService } from './services/gegeben.service';
+import { BezahlungTabComponent } from './bezahlung-tab/bezahlung-tab.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ZuZhalenComponent,
-    SuggestedAmountComponent
+    SuggestedAmountComponent,
+    BezahlungTabComponent
   ],
   imports: [
     BrowserModule,

@@ -14,20 +14,31 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
    subScription: Subscription;
     selectedAmount= 0;
     numPadNumberStr= '';
+    paidAmountGiven = false;
+    suggestedListReady = false;
   constructor(private bezahlungService: BezhalungService, private gegebenService: GegebenService) {
     this.subScription = this.bezahlungService.getAmountOfAllItems().subscribe(
       totalAmount => {this.suggestedAmountsList = this.suggestedAmount(totalAmount.amountOfAllItems); });
   }
 
   ngOnInit() {
-    // this.suggestedAmountsList = this.suggestedAmount(62.91);
-    // console.log(this.suggestedAmountsList );
   }
 
   ngOnDestroy() {
    this.subScription.unsubscribe();
   }
-
+/**
+ * @description to check is number pad btns enabled or not
+*/
+  isNumPadEnable(): boolean {
+    let result = false;
+    result = (!this.suggestedListReady || this.paidAmountGiven);
+    return result;
+  }
+/**
+ * @description this when click on any btn from number pad
+ * @param btnTxt
+ */
   onNumPadBtnClick(btnTxt: string): void {
     if ( btnTxt === 'b' && this.numPadNumberStr.length > 0) {
       this.numPadNumberStr = this.numPadNumberStr.slice(0, -1);
@@ -43,34 +54,50 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
     console.log(this.numPadNumberStr);
   }
 
+  /**
+   * @description when the ok of number pad clicked to check is the entered amount equal the requested and to set the given amount 
+   * 
+   */
   onZahlenBtnClick(): void {
     const  padNumber = parseFloat(this.numPadNumberStr);
     const rest =  padNumber - this.suggestedAmountsList[this.suggestedAmountsList.length - 1];
     if ( rest < 0) {
       alert('Error The entered number is = ' +  padNumber
-      + 'and this is lower than the total amount number = ' + this.suggestedAmountsList[0] );
+      + 'and this is lower than the total amount number = ' + this.suggestedAmountsList[this.suggestedAmountsList.length - 1] );
     }else if ( rest > 0 ) {
       this.onSelectAmount( padNumber);
-      // alert('The rest is = ' + rest);
     }else {
       this.onSelectAmount( padNumber);
-      // alert('Thanks for shopping from our Market');
     }
   }
 
+  /**
+   * @description this when select amout to set it as given or paid amount
+   * @param amount
+   */
   onSelectAmount(amount: number): void {
+    this.paidAmountGiven = true;
+    this.suggestedListReady = false;
     console.log( 'Selected amount= ' + amount);
-    // this.bezahlungService.setPaidAmount(amount);
     this.selectedAmount = amount;
     this.gegebenService.setPaidAmount(amount);
-    // pass the value to gegeben lable on the other component
+    this.numPadNumberStr = '';
   }
+
+
   /**
    * @param amount
    * this to return list of array suggested amounts
    */
 
   suggestedAmount(amount: number): number[] {
+    if ( amount === 0) {
+      this.paidAmountGiven = false;
+      this.suggestedListReady = false;
+      return [];
+    }
+    this.paidAmountGiven = false;
+    this.suggestedListReady = true;
     this.selectedAmount =  0;
     this.numPadNumberStr = '';
     const result: number[] = [];
@@ -80,16 +107,12 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
       console.log('First ' + result[i]);
         if (this.isDecimalNumber(amount) ) {
           i++; // SECOND
-          // result[i] = (Math.round(amount * 10 ) / 10); // this has some error
           // to check if this rounded lower than current amount increase only one else so the rounded number is higher
           result[i] = (Math.round(amount)) > amount ? Math.round(amount) : (Math.round(amount) + 1);
           console.log('second number is = ' + result[i]);
         }
         i++; // THird
-        // result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);// wrong number is the current number it self dvidable five
         // to check if the current number not five divdable get the neares greatest number eles add five to the current number
-        // tslint:disable-next-line:max-line-length
-        // result[i] = (result[i - 1] % 5 ) !== 0 ? this.nearestGreaterNumberDividFive(result[i - 1]) : ( result[i - 1].valueOf() + 5); // this is has issues
         if ( (result[i - 1] % 5 ) !== 0 ) {// the number is not dividable on five
           result[i] = this.nearestGreaterNumberDividFive(result[i - 1]);
         }else if (( result[i - 1] % 10 === 5)) {// start with five
@@ -101,70 +124,22 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
         }
         console.log('Third ' + result[i]);
 
-        // FOURTH
-        // tslint:disable-next-line:max-line-length
-        // result [i] = ( result[i - 1] % 10 === 5) ? result[i - 1] + 5 : this.getNextNumberForNumbersStartWithZeor(result[i - 1])  ;// updated
-        if ( (result[i] % 500) !== 0) {
-            i++;
-            if (( result[i - 1] % 10 === 5)) {// start with five
-              result [i] = result[i - 1] + 5 ;
-            }else if (this.isBankNote(result[i - 1])) {
-              result [i] = this.getNextBankNote(result[i - 1]);
-            }else {
-              result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
+        // FOURTH &  FIFTH
+        for (let index = 0; index < 2; index++) {
+            if ( (result[i] % 500) !== 0) {
+                i++;
+                if (( result[i - 1] % 10 === 5)) {// start with five
+                  result [i] = result[i - 1] + 5 ;
+                }else if (this.isBankNote(result[i - 1])) {
+                  result [i] = this.getNextBankNote(result[i - 1]);
+                }else {
+                  result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
+                }
             }
-            console.log('fourth = ' + result[i]);
+
         }
-        // if ( result[i - 1] % 10 === 5) {
-        //   console.log('true');
-        //   console.log(result[i - 1] % 10);
-        //   console.log(result [i - 1]);
-        //     result[i] = result[i - 1] + 5;
-        // }else {
-        //   result[i] = result[i - 1] + 10;
-        // }
-        // console.log(result [i]);
-        // this to check th bank note
-        // FIFTH
 
-        if ( (result[i] % 500) !== 0) {
-          i++;
-          if (( result[i - 1] % 10 === 5)) {// start with five
-            result [i] = result[i - 1] + 5 ;
-          }else if (this.isBankNote(result[i - 1])) {
-            result [i] = this.getNextBankNote(result[i - 1]);
-          }else {
-            result [i] = this.getNextNumberForNumbersStartWithZeor(result[i - 1]);
-          }
-          console.log('FIFTH = ' + result[i]);
-      }
-        /*if ( result[i] < 500) {
-          if ( result[i] <  5) {
-
-            i++;
-            result[i] = 5;
-          }else if (result[i] <  10) {
-            i++;
-            result[i] = 10;
-          }else if (result[i] <  20) {
-            i++;
-            result[i] = 20;
-          }else if (result[i] <  50) {
-            i++;
-            result[i] = 50;
-          }else if (result[i] <  100) {
-            i++;
-            result[i] = 100;
-          }else if (result[i] <  200) {
-            i++;
-            result[i] = 200;
-          }else if (result[i] < 500) {
-            i++;
-            result[i] = 500;
-          }
-          console.log('Fifth = ' + result[i]);
-
-        }*/}
+       }
 
     return result.reverse();
   }
@@ -248,7 +223,7 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
       return result;
   }
     /**
-     * this function to get the next bank note
+     * this function to get the next bank note the enum start from 10
      * @param amount
      */
     isBankNote(amount: number): boolean {
@@ -265,7 +240,10 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
 
      }
  }
-
+/**
+ * @description this to get next banknote based of enum which start from 10
+ * @param amount 
+ */
  getNextBankNote(amount: number): number {
   let result = 0;
   if (this.isBankNote(amount)) {

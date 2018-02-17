@@ -1,68 +1,47 @@
-<ul class="nav nav-tabs justify-content-center" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#bar">  Bar  </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" data-toggle="tab" href="#menu1">EC</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" data-toggle="tab" href="#menu2">Kreditkarte</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" data-toggle="tab" href="#menu3">Gutschein</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" data-toggle="tab" href="#menu4">Sonstige</a>
-    </li>
-</ul>
-<div class="tab-content">
-    <div id="bar" class="tab-pane active">
-        <div class="row row-content align-items-center ">
-            <div class="col col-md-3 offset-md-3">
-                <ul *ngIf="suggestedAmountsList" class="amounts">
-                    <li *ngFor="let amount of suggestedAmountsList" [class.selected]="amount===selectedAmount" (click)="onSelectAmount(amount)">
-                        {{amount|currency:'€'}}
-                    </li>
-                </ul>
-            </div>
+<div class="row row-content align-items-center ">
+    <div class="col col-md-3 offset-md-3">
+        <ul *ngIf="suggestedAmountsList" class="amounts">
+            <li *ngFor="let amount of suggestedAmountsList" [class.selected]="amount===selectedAmount" (click)="paidAmountGiven||onSelectAmount(amount)">
+                {{amount|currency:'€'}}
+            </li>
+        </ul>
+    </div>
 
-            <div class="col col-md-3">
-                <!-- <div class="row">
+    <div class="col col-md-3">
+        <!-- <div class="row">
             <ul class="amounts col-md-9">
                 <li>{{numPadNumberStr}}</li>
 
             </ul>
         </div> -->
-                <div class="row">
+        <div class="row">
 
-                    <ul class="amounts numpad col-md-4">
-                        <li (click)="onNumPadBtnClick(7)">7</li>
-                        <li (click)="onNumPadBtnClick(4)">4</li>
-                        <li (click)="onNumPadBtnClick(1)">1</li>
-                        <li (click)="onNumPadBtnClick('b')"><span class="fa fa-caret-left fa-lg"></span></li>
-                    </ul>
-                    <ul class="amounts numpad col-md-4">
-                        <li (click)="onNumPadBtnClick(8)">8</li>
-                        <li (click)="onNumPadBtnClick(5)">5</li>
-                        <li (click)="onNumPadBtnClick(2)">2</li>
-                        <li (click)="onNumPadBtnClick(0)">0</li>
-                    </ul>
-                    <ul class="amounts numpad col-md-4">
-                        <li (click)="onNumPadBtnClick(9)">9</li>
-                        <li (click)="onNumPadBtnClick(6)">6</li>
-                        <li (click)="onNumPadBtnClick(3)">3</li>
-                        <li (click)="onNumPadBtnClick('.')">.</li>
-                    </ul>
-                </div>
-
-            </div>
-            <div class="col   align-self-end">
-                <ul class="amounts col-md-6 float-left">
-                    <li>{{numPadNumberStr }}</li>
-                </ul>
-                <button type="button" (click)="onZahlenBtnClick()" class="btn btn-lg btn-primary float-right btn-zhalen">Zahlen</button>
-
-            </div>
+            <ul class="amounts numpad col-md-4">
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(7)">7</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(4)">4</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(1)">1</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick('b')"><span class="fa fa-caret-left fa-lg"></span></li>
+            </ul>
+            <ul class="amounts numpad col-md-4">
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(8)">8</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(5)">5</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(2)">2</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(0)">0</li>
+            </ul>
+            <ul class="amounts numpad col-md-4">
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(9)">9</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(6)">6</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick(3)">3</li>
+                <li (click)="isNumPadEnable()||onNumPadBtnClick('.')">.</li>
+            </ul>
         </div>
+
+    </div>
+    <div class="col   align-self-end">
+        <ul class="amounts col-md-6 float-left">
+            <li>{{numPadNumberStr }}</li>
+        </ul>
+        <button type="button" (click)="onZahlenBtnClick()" class="btn btn-lg btn-primary float-right btn-zhalen" [disabled]=" numPadNumberStr.length===0 || numPadNumberStr==='.'">Zahlen</button>
+
     </div>
 </div>

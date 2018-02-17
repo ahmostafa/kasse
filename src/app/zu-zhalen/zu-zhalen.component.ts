@@ -22,12 +22,12 @@ export class ZuZhalenComponent implements OnInit {
           const paidNumber = this.givenAmount ;
           const rest = paidNumber - this.amount;
           if ( rest < 0) {
-            alert('Error The entered number is = ' + paidNumber
-            + 'and this is lower than the total amount number = ' + this.amount);
+            alert('Fehler Gegeben ist = ' + paidNumber
+            + 'und das ist niedriger als Zahlung = ' + this.amount);
           }else if ( rest > 0 ) {
-            alert('The rest is = ' + rest.toFixed(2));
+            alert('zurück = ' + rest.toFixed(2));
           }else {
-            alert('Thanks for shopping from our Market');
+            alert('Vielen Dank!');
           }
       } );
   }

@@ -61,8 +61,8 @@ export class SuggestedAmountComponent implements OnInit, OnDestroy {
     const  padNumber = parseFloat(this.numPadNumberStr);
     const rest =  padNumber - this.suggestedAmountsList[this.suggestedAmountsList.length - 1];
     if ( rest < 0) {
-      alert('Error The entered number is = ' +  padNumber
-      + 'and this is lower than the total amount number = ' + this.suggestedAmountsList[this.suggestedAmountsList.length - 1] );
+      alert('Fehler Gegeben ist ' + padNumber
+            + ' und das ist niedriger als Zahlung  ' + this.suggestedAmountsList[this.suggestedAmountsList.length - 1] );
     }else if ( rest > 0 ) {
       this.onSelectAmount( padNumber);
     }else {
